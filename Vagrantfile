@@ -12,6 +12,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = "centos/7"
 
   config.vm.provision "shell", inline: %Q{
+    sed -i s/mirror.centos.org/vault.centos.org/g /etc/yum.repos.d/CentOS-*.repo
+    sed -i s/^#.*baseurl=http/baseurl=http/g /etc/yum.repos.d/CentOS-*.repo
+    sed -i s/^mirrorlist=http/#mirrorlist=http/g /etc/yum.repos.d/CentOS-*.repo
     cp -r /vagrant/.vim* /root
     cp -r /vagrant/profile /etc/profile.d/puppet-training.sh
     rpm -Uvh https://yum.puppet.com/puppet6-release-el-7.noarch.rpm
@@ -47,5 +50,3 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
 end
-
-
